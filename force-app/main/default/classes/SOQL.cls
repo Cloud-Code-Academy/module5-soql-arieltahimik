@@ -170,6 +170,15 @@ public with sharing class SOQL {
     //[public | private ] [static] data_type method_name (input parameters) {
     //  The body of the method
     //}    
+    public static List<Lead> getLeadsBySourceOrTitle(String source, String keyword) {
+        String searchKeyword = '%' + keyword + '%';
+        List<Lead> leads = [
+            SELECT LastName, Company, Phone, Email, LeadSource, Title 
+            FROM Lead 
+            WHERE LeadSource = :source OR Title LIKE :searchKeyword];
+        System.debug(leads);
+        return leads;
+    }
 
     /**
      * Question 11
