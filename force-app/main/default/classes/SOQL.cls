@@ -167,9 +167,6 @@ public with sharing class SOQL {
      * @return A list of Lead records.
      * Update the corresponding test class and testGetLeadsBySourceOrTitle method to cover this method
      */
-    //[public | private ] [static] data_type method_name (input parameters) {
-    //  The body of the method
-    //}    
     public static List<Lead> getLeadsBySourceOrTitle(String source, String keyword) {
         String searchKeyword = '%' + keyword + '%';
         List<Lead> leads = [
@@ -189,15 +186,17 @@ public with sharing class SOQL {
      */
     public static List<String> getContactNamesByAccount(Id accountId) {
         // Create a list to hold the Contact LastNames
+        List<Contact> contacts = [SELECT LastName FROM Contact WHERE AccountId = :accountId];
+        List<String> lastNames = new List<String>();
 
         // Query the Contacts
         // Loop through each Contact and add the LastName to the list
-        //for () {
-        //    
-        //}
+        for (Contact c : contacts) {
+            lastNames.add(c.LastName);           
+        }
 
         // Return the list of Contact LastNames
-        return null; // Replace null with the variable you used to store the result
+        return lastNames; // Replace null with the variable you used to store the result
     }
 
     /**
