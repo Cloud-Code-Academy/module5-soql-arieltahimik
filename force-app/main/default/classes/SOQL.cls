@@ -208,9 +208,14 @@ public with sharing class SOQL {
      */
     public static Decimal getTotalRevenueByStage(String stage) {
         // Use AggregateQuery to get the total revenue
+        List<Opportunity> opps = [SELECT StageName, Amount FROM Opportunity WHERE StageName = :stage OR Amount > 10000];
+        Decimal totalRevenue = 0;
+        for(Opportunity opp : opps) {
+            totalRevenue += opp.Amount;
+        }
 
         // Return the total revenue
-        return null; // Replace null with the variable you used to store the result
+        return totalRevenue; // Replace null with the variable you used to store the result
     }
 
     /**
