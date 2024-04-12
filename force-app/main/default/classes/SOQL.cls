@@ -288,8 +288,8 @@ public with sharing class SOQL {
         // Query the Accounts
         List<Account> accounts = [SELECT Id, Name FROM Account WHERE BillingCountry != :country];
         // Loop through each Account and add the Id and Name to the map
-        for (Account c : accounts) {
-            accountIdsToNames.put(c.Id, c.Name);
+        for (Account acc : accounts) {
+            accountIdsToNames.put(acc.Id, acc.Name);
         }
 
         return accountIdsToNames;
