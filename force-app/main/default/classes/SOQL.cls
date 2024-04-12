@@ -208,10 +208,13 @@ public with sharing class SOQL {
      */
     public static Decimal getTotalRevenueByStage(String stage) {
         // Use AggregateQuery to get the total revenue
-        List<Opportunity> opps = [SELECT StageName, Amount FROM Opportunity WHERE StageName = :stage OR Amount > 10000];
+        AggregateResult[] groupedResults = [
+            SELECT SUM(Amount)sumAmount FROM Opportunity 
+            WHERE StageName = :stage OR Amount > 10000 GROUP BY StageName];
+
         Decimal totalRevenue = 0;
-        for(Opportunity opp : opps) {
-            totalRevenue += opp.Amount;
+        for (AggregateResult ar : groupedResults) {
+            totalRevenue += (Decimal) ar.get('sumAmount');
         }
 
         // Return the total revenue
